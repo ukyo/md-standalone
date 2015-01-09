@@ -11,7 +11,7 @@
     "url": "https://github.com/ukyo/md-standalone.git"
   },
   "bin": {
-    {"mdst": "./bin.js"}
+    "mdst": "./bin.js"
   },
   "author": "ukyo <ukyo.web@gmail.com>",
   "license": "MIT",
