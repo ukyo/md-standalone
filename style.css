@@ -1,10 +1,14 @@
-html, body, #output {
+html, body {
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-size: 16px;
   color: #494949;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
 }
 
 a {
@@ -12,33 +16,34 @@ a {
 }
 
 code {
-  background-color: #eee;
   font-size: 80%;
+}
+
+.md-inline-code {
+  background-color: #eee;
   border-radius: 1px;
   border: 1px solid #D7D6D6;
   padding: 1px 2px;
 }
 
-pre > code {
-  border: none;
-  padding: 10px;
-}
-
-#output {
-  display: -webkit-box;
-  -webkit-box-orient: horizontal;
-}
-
-ul.toc {
+#toc {
   list-style-type: none;
   margin:0;
   padding:0;
   font-size: 80%;
   width: 280px;
   background-color: #494949;
+  line-height: 1.6em;
 }
 
-ul.toc, .mdview {
+#splitter {
+  height: 100%;
+  width: 10px;
+  cursor: col-resize;
+  margin-left: -5px;
+}
+
+#toc, #output {
   height: 100%;
   overflow: auto;
   padding: 5px;
@@ -52,7 +57,7 @@ ul.toc, .mdview {
   padding-left: 1.4em;
 }
 
-.mdview {
+#output {
   -webkit-box-flex: 1;
 }
 
@@ -73,10 +78,6 @@ h4 {
   color: #999;
   font-size: 100%;
   margin: 1em 0;
-}
-
-pre {
-  margin-top: -24px;
 }
 
 th, td {
@@ -101,27 +102,37 @@ i.fa {
   cursor: pointer;
 }
 
-ul.toc li {
-  display: none;
+i.fa.fa-folder-open-o, i.fa.fa-folder-o {
+  color: orange;
 }
 
-ul.toc li[class*="open"] {
-  display: block;
+i.fa.fa-file-o {
+  color: #83AEF2;
 }
 
-ul.toc a {
+ul {
+  list-style-type: none;
+}
+
+
+#toc a, #toc, i {
   text-decoration: none;
-}
-
-ul.toc .heading3 a {
   color: #f0f0f0;
 }
 
-ul.toc i, ul.toc a {
-  color: rgb(255, 184, 104);
+.md-toc + ul {
+  display: none;
 }
 
-ul.toc .heading3 .fa-plus {
-  color: #6DA6E7;
-  width: 14px;
+.md-toc.md-toc-open + ul {
+  display: block;
+}
+
+#toc ul {
+    margin: 0;
+    padding: 0;
+}
+
+#toc ul ul {
+    padding-left: 1.5em;
 }
