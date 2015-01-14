@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 var fs = require('fs')
 var argv = require('optimist').argv
 var mustache = require('mustache')
@@ -8,7 +7,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 
-var mdpath = path.resolve(argv._[0]);
+var mdpath = path.resolve(process.cwd(), argv._[0]);
 var mdbasename = path.basename(mdpath);
 var mddir = path.resolve(path.dirname(mdpath));
 var md = fs.readFileSync(mdpath, {encoding: 'utf-8'});
@@ -29,13 +28,13 @@ var entryPath = __dirname + '/public/_main.jsx';
 var entry = mustache.render(fs.readFileSync(__dirname + '/public/main.jsx', {encoding: 'utf-8'}), {RENDERED_PATH: mdtmppath});
 fs.writeFileSync(entryPath, entry, {encoding: 'utf-8'});
 
-var bundlePath = __dirname + '/bundle.js'
+var bundlePath = mddir + '/tmp-' + Date.now() + '-bundle.js'
 var webpackConfig = {
   entry: entryPath,
   output: {
-    path: __dirname,
-    filename: 'bundle.js'
+    filename: bundlePath
   },
+  context: __dirname,
   module: {
     loaders: [
       {test: /\.woff(\?.*)?$/, loader: "url-loader?mimetype=application/font-woff"},
