@@ -4,7 +4,7 @@ var React = require('react');
 var mdhtml = require('{{&RENDERED_PATH}}');
 require('font-awesome/css/font-awesome.css');
 require('highlight.js/styles/tomorrow-night.css');
-require('../style.css');
+require('{{&STYLESHEET_PATH}}');
 
 var output = document.getElementById('output');
 output.innerHTML = mdhtml;

@@ -1,71 +1,41 @@
 #!/usr/bin/env node
+
 var fs = require('fs')
-var argv = require('optimist').argv
-var mustache = require('mustache')
-var render = require('./lib/render');
 var path = require('path');
-var webpack = require('webpack');
+var optimist = require('optimist');
+var mdst = require('./index');
 
 
-var mdpath = path.resolve(process.cwd(), argv._[0]);
-var mdbasename = path.basename(mdpath);
-var mddir = path.resolve(path.dirname(mdpath));
-var md = fs.readFileSync(mdpath, {encoding: 'utf-8'});
+var argv = optimist
+.usage('Usage: mdst [options] path/to/doc.md')
+
+.describe('s', 'Stylesheet path(css, scss or less).')
+.describe('o', 'Output path(default STDOUT).')
+
+.alias('s', 'style')
+.alias('o', 'output')
+
+.default('s', __dirname + '/style.css')
+
+.argv
 
 
-var mdtmppath = mddir + '/tmp-' + Date.now() + '-' + mdbasename + '.html';
-var rendered = render(md).replace(/<img src="([^"]+)"/g, function(all, imgPath) {
-  var p = path.resolve(mddir, imgPath);
-  if (/^https?:\/\//.test(imgPath)) return all;
-  var ext = p.split('.').pop();
-  return '<img src="data:image/' + ext + ';base64,' + fs.readFileSync(p).toString('base64') + '"';
-});
+if (argv.h || argv.help || !argv._.length) {
+  console.log(optimist.help());
+} else {
+  mdst({
+    input: argv._[0],
+    stylesheetPath: argv.s
+  }, function(err, result) {
+    if (err) return console.error(err.stack);
 
-fs.writeFileSync(mdtmppath, rendered, {encoding: 'utf-8'})
+    var stream = process.stdout;
+    if (argv.o) {
+      stream = fs.createWriteStream(path.resolve(process.cwd(), argv.o), {
+        encoding: 'utf8'
+      });
+    }
+    stream.write(result);
+  });  
+}
 
-
-var entryPath = __dirname + '/public/_main.jsx';
-var entry = mustache.render(fs.readFileSync(__dirname + '/public/main.jsx', {encoding: 'utf-8'}), {RENDERED_PATH: mdtmppath});
-fs.writeFileSync(entryPath, entry, {encoding: 'utf-8'});
-
-var bundlePath = mddir + '/tmp-' + Date.now() + '-bundle.js'
-var webpackConfig = {
-  entry: entryPath,
-  output: {
-    filename: bundlePath
-  },
-  context: __dirname,
-  module: {
-    loaders: [
-      {test: /\.woff(\?.*)?$/, loader: "url-loader?mimetype=application/font-woff"},
-      {test: /\.ttf(\?.*)?$/, loader: "url-loader?mimetype=application/x-font-truetype"},
-      {test: /\.eot(\?.*)?$/, loader: "url-loader?mimetype=application/vnd.ms-fontobject"},
-      {test: /\.svg(\?.*)?$/, loader: "url-loader?mimetype=image/svg+xml"},
-      {test: /\.otf(\?.*)?$/, loader: "url-loader?mimetype=application/x-font-opentype"},
-      {test: /\.gif(\?.*)?$/, loader: "url-loader?mimetype=image/gif"},
-      {test: /\.jpg(\?.*)?$/, loader: "url-loader?mimetype=image/jpg"},
-      {test: /\.png(\?.*)?$/, loader: "url-loader?mimetype=image/png"},
-      {test: /\.jsx$/, loader: 'jsx-loader?harmony'},
-      {test: /\.css$/, loader: "style-loader!css-loader"},
-      {test: /\.html$/, loader: 'html-loader'}
-    ]
-  },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.optimize.DedupePlugin()
-  ]
-};
-
-webpack(webpackConfig, function(err) {
-  var bundle = fs.readFileSync(bundlePath, {encoding: 'utf-8'});
-  var template = fs.readFileSync(__dirname + '/public/index.html', {encoding: 'utf-8'});
-  bundle = bundle.replace('"</script>"', '"</scr" + "ipt>"')
-  bundle = bundle.replace("'</script>'", "'</scr' + 'ipt>'")
-
-  var result = mustache.render(template, {md: md, bundle: bundle});
-  console.log(result);
-  
-  fs.unlinkSync(mdtmppath);
-  fs.unlinkSync(entryPath);
-  fs.unlinkSync(bundlePath);
-});
