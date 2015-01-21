@@ -36,10 +36,15 @@ module.exports = function mdst(options, callback) {
   writeFile(mdRenderedFile.path, mdRenderedFile.content);
 
   var entryFile = {};
+  var headingsLevel = [];
+  for (var i = options.level.top, n = options.level.bottom; i <= n; ++i) {
+    headingsLevel.push('h' + i);
+  }
   entryFile.path = __dirname + '/public/_main.jsx';
   entryFile.content = mustache.render(readFile(__dirname + '/public/main.jsx'), {
     RENDERED_PATH: mdRenderedFile.path,
-    STYLESHEET_PATH: options.stylesheetPath
+    STYLESHEET_PATH: options.stylesheetPath,
+    HEADINGS_LEVEL: headingsLevel.join()
   });
   writeFile(entryFile.path, entryFile.content);
 
@@ -65,6 +70,8 @@ module.exports = function mdst(options, callback) {
         {test: /\.png(\?.*)?$/, loader: "url-loader?mimetype=image/png"},
         {test: /\.jsx$/, loader: 'jsx-loader?harmony'},
         {test: /\.css$/, loader: "style-loader!css-loader"},
+        {test: /\.scss$/, loader: "style-loader!css-loader!sass-loader"},
+        {test: /\.less$/, loader: "style-loader!css-loader!less-loader"},
         {test: /\.html$/, loader: 'html-loader'}
       ]
     },

@@ -2,7 +2,7 @@
 
 var React = require('react');
 var mdhtml = require('{{&RENDERED_PATH}}');
-require('font-awesome/css/font-awesome.css');
+require('../fontello/css/font-icon.css');
 require('highlight.js/styles/tomorrow-night.css');
 require('{{&STYLESHEET_PATH}}');
 
@@ -49,7 +49,7 @@ function tree(arr) {
 
 var Foo = React.createClass({
   getInitialState() {
-    var arr = [].slice.call(document.querySelectorAll('h1,h2,h3,h4,h5,h6'));
+    var arr = [].slice.call(document.querySelectorAll('{{HEADINGS_LEVEL}}'));
     arr = arr.map(x => {
       return {
         level: x.tagName.match('[1-6]')[0],
@@ -79,8 +79,8 @@ var Foo = React.createClass({
             <li>
               {
                 x.children ?
-                  <a onClick={this.toggle.bind(this, x)}><i className={x.isOpen ? "fa fa-folder-open-o" : "fa fa-folder-o"}></i></a> :
-                  <i className="fa fa-file-o"></i>
+                  <a onClick={this.toggle.bind(this, x)}><i className={x.isOpen ? "fa icon-folder-open-empty" : "fa icon-folder-empty"}></i></a> :
+                  <i className="fa icon-doc"></i>
               }
               <a className={'md-toc ' + (x.isOpen ? 'md-toc-open' : '')} href={'#' + x.anchor} onClick={this.open.bind(this, x)}>{x.label}</a>
               {x.children ? renderTree(x.children) : null}

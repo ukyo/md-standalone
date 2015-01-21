@@ -102,11 +102,11 @@ i.fa {
   cursor: pointer;
 }
 
-i.fa.fa-folder-open-o, i.fa.fa-folder-o {
+i.icon-folder-empty, i.icon-folder-open-empty {
   color: orange;
 }
 
-i.fa.fa-file-o {
+i.icon-doc {
   color: #83AEF2;
 }
 

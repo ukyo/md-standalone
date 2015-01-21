@@ -2,7 +2,7 @@
   "name": "md-standalone",
   "version": "0.2.5",
   "description": "",
-  "main": "./bin.js",
+  "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,15 +18,17 @@
   "dependencies": {
     "css-loader": "^0.9.0",
     "file-loader": "^0.8.1",
-    "font-awesome": "^4.2.0",
     "highlight.js": "^8.4.0",
     "html-loader": "^0.2.3",
     "jsx-loader": "^0.12.2",
+    "less": "^2.2.0",
+    "less-loader": "^2.0.0",
     "lodash": "^2.4.1",
     "marked": "^0.3.2",
     "mustache": "^1.0.0",
     "optimist": "^0.6.1",
     "react": "^0.12.2",
+    "sass-loader": "^0.3.1",
     "style-loader": "^0.8.2",
     "url-loader": "^0.5.5",
     "webpack": "^1.4.15"
