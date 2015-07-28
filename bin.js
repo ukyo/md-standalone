@@ -37,8 +37,9 @@ if (argv.h || argv.help || !argv._.length) {
   }
 
   mdst({
-    input: argv._[0],
-    stylesheetPath: argv.s,
+    input: path.resolve(process.cwd(), argv._[0]),
+    output: argv.o,
+    styleSheetPath: argv.s,
     level: {
       top: headingsLevelTop,
       bottom: headingsLevelBottom
@@ -53,6 +54,5 @@ if (argv.h || argv.help || !argv._.length) {
       });
     }
     stream.write(result);
-  });  
+  });
 }
-
