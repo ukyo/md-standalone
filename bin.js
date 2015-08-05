@@ -14,16 +14,20 @@ var argv = optimist
 	.describe('l', 'Headings level')
 	.describe('c', 'Code Theme')
 	.describe('m', 'Minify')
+	.describe('t', 'Toc Tree')
 
 	.alias('s', 'style')
 	.alias('o', 'output')
 	.alias('l', 'level')
 	.alias('c', 'code')
 	.alias('m', 'minify')
+	.alias('t', 'toc')
 
 	.default('s', __dirname + '/lib/style/style.scss')
 	.default('l', '1-6')
 	.default('c', 'tomorrow-night-eighties')
+	.default('m', false)
+	.default('t', false)
 
 	.argv;
 
@@ -46,6 +50,7 @@ if (argv.h || argv.help || !argv._.length) {
 		output: argv.o,
 		codeTheme: argv.c,
 		styleSheetPath: argv.s,
+		toc: argv.t,
 		minify: argv.m,
 		level: {
 			top: headingsLevelTop,
