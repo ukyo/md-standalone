@@ -1,0 +1,168 @@
+$gray01: #494949;
+$gray02: #eee;
+$gray03: #f8f8f8;
+$gray04: #fdfdfd;
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 14px;
+  color: $gray01;
+  background-color: $gray04;
+  font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+#md, #toc {
+  overflow-y: auto;
+}
+
+#md {
+  padding: 12px;
+  flex: 1;
+}
+
+#toc {
+  width: 280px;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+
+  ul {
+    padding-left: 0em;
+    display: none;
+    list-style-type: none;
+  }
+
+  > ul {
+    display: block;
+  }
+
+  .toc-title.open + ul {
+    display: block;
+  }
+
+  li {
+    position: relative;
+    > .icon-folder {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  $base-padding: 1.2em;
+
+  .toc-title {
+    margin-bottom: 3px;
+    padding: 0 $base-padding;
+
+    &:hover {
+      background-color: #A7D5F1;
+    }
+  }
+
+  .icon-folder {
+    cursor: pointer;
+  }
+
+  .icon-folder:before {
+    content: '\e800';
+  }
+
+  .open > .icon-folder:before {
+    content: '\e801';
+  }
+
+  .heading- {
+    &1 a, &2 a, &3 a, &4 a, &5 a, &6 a {
+      text-decoration: none;
+      color: $gray01;
+    }
+
+    &2, &3, &4, &5, &6 {
+      font-size: 80%;
+    }
+
+    &1 a, &2 a, &3 a {
+      font-weight: bold;
+    }
+
+    &1 a {color: #000;}
+    &2 a {text-decoration: underline;}
+
+    &2 {padding-left: $base-padding * 2;}
+    &3 {padding-left: $base-padding * 3;}
+    &4 {padding-left: $base-padding * 4;}
+    &5 {padding-left: $base-padding * 5;}
+    &6 {padding-left: $base-padding * 6;}
+
+
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0;
+  padding: 0.2em 0;
+  font-weight: bold;
+}
+
+h1 {
+  color: #000;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+  color: #999;
+  border-bottom: 1px solid #ddd;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+a {
+  color: #087EE2;
+}
+
+code {
+  font-size: 80%;
+}
+
+code:not(.hljs) {
+  background-color: $gray03;
+  border-radius: 1px;
+  border: 1px solid $gray02;
+  padding: 1px 2px;
+}
+
+table {
+  font-size: 80%;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: $gray03;
+}
+
+td, th {
+  padding: 0.3em 1em;
+  text-align: left;
+  border: 1px solid $gray02;
+}
+
+td {
+  color: #666;
+}

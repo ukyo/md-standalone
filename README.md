@@ -26,7 +26,7 @@ npm install md-standalone
 
 usage
 
-```
+```js
 var mdst = require('md-standalone');
 
 mdst({
