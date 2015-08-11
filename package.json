@@ -16,6 +16,7 @@
   "author": "ukyo <ukyo.web@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "autoprefixer-loader": "^2.0.0",
     "css-loader": "^0.9.1",
     "file-loader": "^0.8.1",
     "highlight.js": "^8.4.0",
@@ -26,7 +27,6 @@
     "lodash": "^3.0.0",
     "marked": "^0.3.2",
     "optimist": "^0.6.1",
-    "raw-loader": "^0.5.1",
     "sass-loader": "^0.3.1",
     "style-loader": "^0.8.3",
     "url-loader": "^0.5.5",
