@@ -54,3 +54,83 @@ mdst({
   // ...
 });
 ```
+
+## Custom Renderer
+
+```
+mdst foo.md > doc.html --js path/to/renderer.js
+```
+
+example
+
+```js
+var html = require('mdHelper').getHtml();
+var options = require('options');
+var tocHelper = require('tocHelper');
+
+module.exports = function() {
+	document.body.innerHTML = '<div id="md">' +html + '</div>';
+	document.title = '（＾ω＾ ≡ ＾ω＾）おっおっおっ';
+
+  console.log(options);
+  var tocTree = tocHelper.getTocTree();
+  console.log(tocTree);
+  var tocTree2 = tocHelper.trimTocTree(tocTree, 2, 3);
+  console.log(tocTree, tocTree2);
+  console.log(tocHelper.renderTocTree(tocTree2));
+};
+```
+
+### Helper modules
+
+A custom renderer can use some helpers.
+
+#### mdHelper
+
+##### mdHelper.getHtml()
+
+return a rendered markdown file.
+
+#### tocHelper
+
+##### tocHelper.getTocTree()
+
+return a toc tree as json.
+
+```js
+[
+  {
+    heading: {level: 1, text: foo, anchor: foo},
+    children: [...]
+  },
+  ...
+]
+```
+
+##### tocHelper.trimTocTree(tocTree, top, bottom)
+
+trim a toc tree.
+
+```js
+// generate a toc tree range of h2-h4
+tocHelper.trimTocTree(tocTree, 2, 4)
+```
+
+##### tocHelper.renderTocTree(tocTree)
+
+render a html string from a toc tree.
+
+#### options
+
+parts of cli options.
+
+```js
+{
+  toc: true,
+  level: {
+    top: 1,
+    bottom: 6
+  },
+  codeTheme: 'tomorrow-night-eighties'
+}
+```
