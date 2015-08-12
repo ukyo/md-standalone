@@ -15,6 +15,7 @@ var argv = optimist
 	.describe('c', 'Code Theme')
 	.describe('m', 'Minify')
 	.describe('t', 'Toc Tree')
+	.describe('j', 'Js Path')
 
 	.alias('s', 'style')
 	.alias('o', 'output')
@@ -22,8 +23,10 @@ var argv = optimist
 	.alias('c', 'code')
 	.alias('m', 'minify')
 	.alias('t', 'toc')
+	.alias('j', 'js')
 
 	.default('s', __dirname + '/lib/style/style.scss')
+	.default('j', __dirname + '/lib/defaultRenderer.js')
 	.default('l', '1-6')
 	.default('c', 'tomorrow-night-eighties')
 	.boolean('m')
@@ -46,10 +49,11 @@ if (argv.h || argv.help || !argv._.length) {
 	}
 
 	mdst({
-		input: path.resolve(process.cwd(), argv._[0]),
+		mdPath: path.resolve(process.cwd(), argv._[0]),
+		jsPath: path.resolve(process.cwd(), argv.j),
+		styleSheetPath: path.resolve(process.cwd(), argv.s),
 		output: argv.o,
 		codeTheme: argv.c,
-		styleSheetPath: argv.s,
 		toc: argv.t,
 		minify: argv.m,
 		level: {
