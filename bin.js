@@ -26,8 +26,8 @@ var argv = optimist
 	.default('s', __dirname + '/lib/style/style.scss')
 	.default('l', '1-6')
 	.default('c', 'tomorrow-night-eighties')
-	.default('m', false)
-	.default('t', false)
+	.boolean('m')
+	.boolean('t')
 
 	.argv;
 
